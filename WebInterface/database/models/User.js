@@ -10,7 +10,8 @@ var userSchema =mongoose.Schema({
     email:String,
     username:String,
     ble:{type:objectId, ref:'Bluetooth'},
-    reminders:[{type:objectId,ref:'Reminder'}]
+    reminders:[{type:objectId,ref:'Reminder'}],
+    timestamp:true
 })
 
 module.exports=mongoose.model('User',userSchema);

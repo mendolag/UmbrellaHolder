@@ -13,8 +13,8 @@ var reminderSchema =mongoose.Schema({
     days:{  mon:Boolean, tue:Boolean,
             wed:Boolean, thu:Boolean,
             fri:Boolean, sat:Boolean,
-            sun:Boolean}
-
+            sun:Boolean},
+    timestamp:true
 })
 
 module.exports=mongoose.model('Reminder',reminderSchema);

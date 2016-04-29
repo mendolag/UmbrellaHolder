@@ -9,7 +9,13 @@ router.get('/', function(req, res, next) {
 
 });
 
-router.get('/register',function (req,res) {
+router.get('/user/:username',function (req,res) {
   
-})
+});
+
+router.get('/user/reminders',function(req,res){
+  
+});
+
+
 module.exports = router;
