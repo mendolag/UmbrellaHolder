@@ -9,9 +9,9 @@ var Schema=mongoose.Schema,
 var userSchema =mongoose.Schema({
     email:String,
     username:String,
-    ble:{type:objectId, ref:'Bluetooth'},
+    bluetoothId:{type:objectId, ref:'Bluetooth'},
     reminders:[{type:objectId,ref:'Reminder'}],
-    timestamp:true
+    timestamps: Date
 })
 
 module.exports=mongoose.model('User',userSchema);

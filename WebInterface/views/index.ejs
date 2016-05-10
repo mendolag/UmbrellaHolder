@@ -3,9 +3,18 @@
   <head>
     <title>Umbrella Reminder </title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="import" href="/bower_components/polymer/polymer.html">
+    <link rel="import" href="/bower_components/webcomponentsjs/webcomponents-lite.min.js">
+    <link rel="import" href="/bower_components/polymer/polymer.html">
+    <!--<link rel="import" hrer="/mycomp/...">-->
+    <link rel="import" href="/bower_components/paper-button/paper-button.html">
+    <link rel="import" href="/bower_components/iron-icons/iron-icons.html">
+
   </head>
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+    <a href="/profile"><paper-button raised><iron-icon icon="account-box"></iron-icon>Profile</paper-button></a>
+    <a href="/register"><paper-button raised><iron-icon icon="input"></iron-icon>Register</paper-button></a>
   </body>
 </html>

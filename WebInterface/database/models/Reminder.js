@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var reminderSchema =mongoose.Schema({
     name:String,
     username:String,
+    condition:String,
     hour:{
         from:{ type: Number,min:0, max: 23 },
         to:{type: Number, min:0, max:23}
@@ -14,7 +15,8 @@ var reminderSchema =mongoose.Schema({
             wed:Boolean, thu:Boolean,
             fri:Boolean, sat:Boolean,
             sun:Boolean},
-    timestamp:true
-})
+
+    timestamps: Date
+});
 
 module.exports=mongoose.model('Reminder',reminderSchema);

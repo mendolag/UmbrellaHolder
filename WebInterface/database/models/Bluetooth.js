@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 var bleSchema =mongoose.Schema({
     bleName:String,
     registered:Boolean,
-    timestamp:true
+    timestamps: Date
 })
 
 module.exports=mongoose.model('Bluetooth',bleSchema);
