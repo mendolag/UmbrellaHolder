@@ -1,20 +1,26 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Umbrella Reminder </title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel="import" href="/bower_components/polymer/polymer.html">
-    <link rel="import" href="/bower_components/webcomponentsjs/webcomponents-lite.min.js">
-    <link rel="import" href="/bower_components/polymer/polymer.html">
-    <!--<link rel="import" hrer="/mycomp/...">-->
-    <link rel="import" href="/bower_components/paper-button/paper-button.html">
-    <link rel="import" href="/bower_components/iron-icons/iron-icons.html">
+<!--DEBUG='ljs,ljs:stateServer,ljs:deploymentServer' node index.js-->
 
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <a href="/profile"><paper-button raised><iron-icon icon="account-box"></iron-icon>Profile</paper-button></a>
-    <a href="/register"><paper-button raised><iron-icon icon="input"></iron-icon>Register</paper-button></a>
-  </body>
-</html>
+<!doctype html>
+
+<html>
+<head>
+    <title>Umbrella Holder Authentication</title>
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="import" href="../bower_components/polymer/polymer.html">
+    <link rel="import" href="../components/my-button-link.html">
+
+    <style>
+        body {padding-top:80px;}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class=" text-center">
+        <h1><%=title%></h1>
+        <my-button-link myclass="custom indigo" url="/login" text="login" myicon="account-box"></my-button-link>
+        <my-button-link myclass="custom indigo" url="/signup" text="Signup" myicon="input"></my-button-link>
+    </div>
+</div>
+</body>

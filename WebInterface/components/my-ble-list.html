@@ -1,0 +1,79 @@
+<script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+
+
+<dom-module id="my-ble-list">
+    <style>
+
+    </style>
+    <template>
+        <iron-ajax url="/getUnregisteredBluetooth" last-response="{{data}}" auto ></iron-ajax>
+        <div id="container" onload="_hide()">
+            <iron-list id="itemsList" items="[[data]]" selected$="{{selectedItem}}" selection-enabled>
+                <template>
+                    <div>
+                         <div tabindex$="[[tabIndex]]" on-tap="selection">
+                            <div class="pad">
+                                <div class="primary">
+                                   Bluetooth name: [[item.bleName]]
+                                </div>
+                                <br class="secondary dim">First seen :[[item.created_at]]</br>
+                                Last seen  :[[item.updatedAt]]
+                            </div>
+                            </div>
+                        </div>
+                        <div class="border"></div>
+                    </div>
+                </template>
+            </iron-list>
+        </div>
+    </template>
+    <script>
+        (function () {
+            'use strict';
+            Polymer({
+                is: 'my-ble-list',
+                properties:{
+                    selectedItem:{
+                        type:Object
+                    },
+                    items:{
+                        type:Object
+                    }
+                },
+                _register:function(){
+                    console.log(this.selected);
+                    console.log(thisdata);
+                },
+
+                ready:function(){
+                    console.log("we");
+                    if(this.items){
+                        console.log("ci sono");
+
+                    }
+                    else{
+                        console.log("non ci sono");
+                        var elem = document.getElementById('container');
+                        console.log(elem);
+//                        elem.parentNode.removeChild(elem);
+                    }
+
+                },
+                selection:function (e) {
+                    console.log(e.model);
+                    console.log(this.parentElement);
+                    var obj = e.model.__data__.item;
+                    var id = obj._id;
+                    var url="/assignBle/"+id;
+                    window.location.href=url;
+                }
+
+
+            })
+        })();
+    </script>
+</dom-module>

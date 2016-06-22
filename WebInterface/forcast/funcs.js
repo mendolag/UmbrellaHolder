@@ -5,8 +5,7 @@
 
 var request=require('request');
 var uri=require('./params').uri;
-
-
+var moment=require('moment');
 
 exports.forcastRequest=function(callback) {
     request(uri,  function (error, response, body) {
@@ -19,8 +18,17 @@ exports.forcastRequest=function(callback) {
     });
 }
 
+exports.getDay=function(){
+    var days=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    return days[moment().day()];
+}
+
+exports.getHour=function(){
+    return moment().hour();
+}
+
 function avarageToday(hourly) {
-    var summary=hourly.summary;
+    //var summary=hourly.summary;
     var icon=hourly.icon;
     var data=hourly.data;
     var dataLen=data.length;
@@ -58,17 +66,15 @@ function avarageToday(hourly) {
         avgProb=avgProb/i;
         avgWSpeed=avgWSpeed/i;
         avgHum=avgHum/i;
-
+        console.log(avgProb);
         var daily={
-            summary:summary,
+            //summary:summary,
             icon:icon,
-            min:minTemp,
-            max:maxTemp,
-            from:from,
-            to:to,
-            avgProb:Math.floor(avgProb*100),
-            avgWindSpeed:avgWSpeed,
-            avgHumidity:Math.floor(avgHum*100)
+            min:Math.round(minTemp),
+            max:Math.round(maxTemp),
+            precProb:Math.floor(avgProb*100),
+            windSpeed:Math.round(avgWSpeed),
+            humidity:Math.floor(avgHum*100)
         }
         
     }
@@ -78,19 +84,21 @@ function avarageToday(hourly) {
 function forecastFilter(forecastBody) {
     var currentDay="error";
     var currentTime="error";
-    var myForecast = {current: null, nextHour: null, today: null}
+    var myForecast = {time:null,date:null,current: null, nextHour: null, today: null}
     if (forecastBody.currently){
         var res = forecastBody.currently;
         var ts = convertTimestamp(res.time);
         currentDay=ts.day+"."+ts.month+"."+ts.year;
-        currentTime=ts.hour + ':' + ts.min + ' ' + ts.ampm;
+        currentTime=ts.hour + ':' + ts.min //+ ' ' + ts.ampm;
+        myForecast.time=currentTime;
+        myForecast.date=currentDay;
         var currentTime = {
-            summary: res.summary,
+            //summary: res.summary,
             icon:res.icon,
-            date:currentDay,
-            time:currentTime,
-            temp:res.temperature,
-            windSpeed:res.windSpeed,
+            //date:currentDay,
+            //time:currentTime,
+            temp:Math.round(res.temperature),
+            windSpeed:Math.round(res.windSpeed),
             humidity:Math.floor(res.humidity*100),
             precProb:Math.floor(res.precipProbability*100)
 
@@ -103,12 +111,12 @@ function forecastFilter(forecastBody) {
         res=forecastBody.hourly.data[h];
         ts=convertTimestamp(res.time);
         var nextHour={
-            summary:res.summary,
+            //summary:res.summary,
             icon:res.icon,
-            date:ts.day+"."+ts.month+"."+ts.year,
-            time:ts.hour + ':' + ts.min + ' ' + ts.ampm,
-            temp:res.temperature,
-            windSpeed:res.windSpeed,
+            //date:ts.day+"."+ts.month+"."+ts.year,
+            //time:ts.hour + ':' + ts.min, //+ ' ' + ts.ampm,
+            temp:Math.round(res.temperature),
+            windSpeed:Math.round(res.windSpeed),
             humidity:Math.floor(res.humidity*100),
             precProb:Math.floor(res.precipProbability*100)
         }
@@ -138,22 +146,22 @@ function convertTimestamp(timestamp){
         hh = d.getHours(),
         h = hh,
         min = ('0' + d.getMinutes()).slice(-2),		// Add leading 0.
-        ampm = 'AM',
+        //ampm = 'AM',
         time;
 
-    if (hh > 12) {
-        h = hh - 12;
-        ampm = 'PM';
-    } else if (hh === 12) {
-        h = 12;
-        ampm = 'PM';
-    } else if (hh == 0) {
-        h = 12;
-    }
+    // if (hh > 12) {
+    //     h = hh - 12;
+    //     ampm = 'PM';
+    // } else if (hh === 12) {
+    //     h = 12;
+    //     ampm = 'PM';
+    // } else if (hh === 0) {
+    //     h = 12;
+    // }
 
     // ie: 2013-02-18, 8:35 AM
     //time = yyyy + '-' + mm + '-' + dd + ', ' + h + ':' + min + ' ' + ampm;
-    time={year:yyyy,month:mm,day:dd,hour:h,min:min,ampm:ampm};
+    time={year:yyyy,month:mm,day:dd,hour:h,min:min}//,ampm:ampm};
     return time;
 }
 

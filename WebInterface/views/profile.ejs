@@ -1,0 +1,51 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+    <title>Node Authentication</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="../bower_components/paper-button/paper-button.html">
+    <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+    <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+    <link rel="import" href="../bower_components/iron-icons/device-icons.html">
+    <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="../components/my-button-link.html">
+
+
+
+    <style>
+        body        { padding-top:80px; word-wrap:break-word; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <%if (user.bluetoothId==null) { %>
+    <!--<a href="/registerBl" ><paper-button raised class="custom indigo" > <iron-icon icon="device:bluetooth"  > </iron-icon> Register Bluetooth</paper-button></a></br>-->
+    <my-button-link url="/registerBl" myclass="custom indigo" myicon="device:bluetooth" text="Register Bluetooth"></my-button-link>
+    <% } %>
+    <div class="page-header text-center">
+
+        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
+
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+        <a href="/addReminder" class="btn btn-default btn-sm">Add Reminder</a>
+    </div>
+    <% if (smessage) { %>
+    <div class="alert alert-success"><%= smessage %></div>
+    <%}%>
+
+    <% if (fmessage) { %>
+    <div class="alert alert-danger"><%= fmessage %></div>
+    <%}%>
+    <div class="row">
+        <h3>Reminders</h3>
+
+        <my-list-button></my-list-button>
+
+    </div>
+
+</div>
+</body>
+</html>

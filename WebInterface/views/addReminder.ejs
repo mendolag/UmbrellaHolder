@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+    <title>Add Component</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="/bower_components/polymer/polymer.html">
+    <link rel="import" href="/bower_components/iron-form/iron-form.html">
+    <link rel="import" href="/bower_components/paper-input/paper-input.html">
+    <link rel="import" href="/bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+    <link rel="import" href="/bower_components/paper-menu/paper-menu.html">
+    <link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
+    <link rel="import" href="/bower_components/paper-button/paper-button.html">
+
+    <!--<link rel="import" hrer="/mycomp/...">-->
+    <style>
+        body {padding-top:80px;}
+        #paper-item{padding: 2px}
+    </style>
+</head>
+<body>
+<div class="container">
+    <h3>Add new reminder</h3>
+    <div class="jumbotron text-center">
+
+        <form is="iron-form" method="post" action="/addReminder" id="reminder">
+            <paper-input name="description" label="Description" required></paper-input>
+            <br>
+            <h3>Under which weather condition do you want to display the message</h3>
+            <paper-dropdown-menu label="Weather Condition" name="condition" required>
+                <paper-menu class="dropdown-content" selected="0">
+                    <paper-item value="always">Always</paper-item></br>
+                    <paper-item value="clear">Clear day</paper-item></br>
+                    <paper-item value="cloudy">Cloudy</paper-item></br>
+                    <paper-item value="partly-cloudy">Partly cloudy</paper-item></br>
+                    <paper-item value="rain">Rain</paper-item></br>
+                    <paper-item value="snow">Snow</paper-item></br>
+                    <paper-item value="sleet">Sleet</paper-item></br>
+                    <paper-item value="wind">Wind</paper-item></br>
+                    <paper-item value="fog">Fog</paper-item></br>
+                </paper-menu>
+            </paper-dropdown-menu></br>
+            <paper-time-picker></paper-time-picker>
+            <h3>Insert time span</h3>
+            <paper-dropdown-menu label="Hour" name="from" required>
+                <paper-menu class="dropdown-content" selected="0">
+                    <paper-item value=1>&nbsp1</paper-item></br>
+                    <paper-item value=2>&nbsp2</paper-item></br>
+                    <paper-item value=3>&nbsp3</paper-item></br>
+                    <paper-item value=4>&nbsp4</paper-item></br>
+                    <paper-item value=5>&nbsp5</paper-item></br>
+                    <paper-item value=6>&nbsp6</paper-item></br>
+                    <paper-item value=7>&nbsp7</paper-item></br>
+                    <paper-item value=8>&nbsp8</paper-item></br>
+                    <paper-item value=9>&nbsp9</paper-item></br>
+                    <paper-item value=10>10</paper-item></br>
+                    <paper-item value=11>11</paper-item></br>
+                    <paper-item value=12>12</paper-item></br>
+                </paper-menu>
+            </paper-dropdown-menu>
+            <paper-dropdown-menu label="am/pm" name="from" >
+                <paper-menu class="dropdown-content" selected="0">
+                    <paper-item value="am">am</paper-item></br>
+                    <paper-item value="pm">pm</paper-item>
+                </paper-menu>
+            </paper-dropdown-menu>
+            <h3>-</h3>
+            <paper-dropdown-menu label="Hour" name="to" >
+                <paper-menu class="dropdown-content" selected="0">
+                    <paper-item value=1> &nbsp1</paper-item></br>
+                    <paper-item value=2> &nbsp2</paper-item></br>
+                    <paper-item value=3> &nbsp3</paper-item></br>
+                    <paper-item value=4> &nbsp4</paper-item></br>
+                    <paper-item value=5> &nbsp5</paper-item></br>
+                    <paper-item value=6> &nbsp6</paper-item></br>
+                    <paper-item value=7> &nbsp7</paper-item></br>
+                    <paper-item value=8> &nbsp8</paper-item></br>
+                    <paper-item value=9> &nbsp9</paper-item></br>
+                    <paper-item value=10> 10</paper-item></br>
+                    <paper-item value=11> 11</paper-item></br>
+                    <paper-item value=12> 12</paper-item></br>
+                </paper-menu>
+            </paper-dropdown-menu>
+            <paper-dropdown-menu name="to" label="am/pm"  selected="0">
+                <paper-menu class="dropdown-content" selected="0">
+                    <paper-item value="am"> am</paper-item></br>
+                    <paper-item value="pm"> pm</paper-item></br>
+                </paper-menu>
+            </paper-dropdown-menu>
+
+            <h3>Select days you want to be reminded</h3>
+            <paper-checkbox name="days" value="mon">Monday</paper-checkbox>
+            <paper-checkbox name="days" value="tue">Tuesday</paper-checkbox></br>
+            <paper-checkbox name="days" value="wen">Wednesday</paper-checkbox>
+            <paper-checkbox name="days" value="thu">Thursday</paper-checkbox></br>
+            <paper-checkbox name="days" value="fri">Friday</paper-checkbox>
+            <paper-checkbox name="days" value="sat">Saturday</paper-checkbox></br>
+            <paper-checkbox name="days" value="sun">Sunday</paper-checkbox></br>
+
+            <paper-button raised onclick="_submit(event)">Submit</paper-button>
+            <paper-button raised onclick="_reset(event)">Reset</paper-button>
+            <div class="output"></div>
+        </form>
+        <script>
+            function _submit(event) {
+                if(validateForm()){
+                Polymer.dom(event).localTarget.parentElement.submit();
+                window.location.href="/profile";}
+            }
+
+            function validateForm() {
+                reminder=document.forms.reminder.elements;
+                var from =parseInt( reminder[2].value);
+                var to=parseInt(reminder[4].value);
+
+
+                if (reminder[3].value=="pm"){
+                    from=from+12;
+                }
+                console.log(reminder[5].value);
+                if(reminder[5].value=="pm"){
+                    to=to+12;
+                }
+                console.log(to);
+                console.log(from);
+                if (from>=to) {
+                    alert("time range incorrect");
+                    return false;
+                }
+                return true;
+            }
+
+            function _reset(event) {
+                var form = Polymer.dom(event).localTarget.parentElement
+                form.reset();
+                form.querySelector('.output').innerHTML = '';
+            }
+            basic.addEventListener('iron-form-submit', function(event) {
+                this.querySelector('.output').innerHTML = JSON.stringify(event.detail);
+            });
+        </script>
+
+    </div>
+</div>
+</body>

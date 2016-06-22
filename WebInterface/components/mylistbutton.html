@@ -1,8 +1,10 @@
+<script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
 <link rel="import" href="/bower_components/polymer/polymer.html">
 <link rel="import" href="/bower_components/iron-form/iron-form.html">
 <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="/bower_components/paper-input/paper-input.html">
 <link rel="import" href="/bower_components/paper-item/paper-item.html">
+<link rel="import" href="/bower_components/iron-list/iron-list.html">
 <link rel="import" href="/bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
@@ -16,7 +18,7 @@
             margin: 1px;
             width: 80%;
             position:inherit;
-            float:left;
+            /*float:left;*/
 
         }
         /*paper-icon-button{*/
@@ -29,20 +31,25 @@
     <template>
 
         <div id="list" onload="_hideButton()">
-            <iron-ajax url={{url}} last-response='{{data}}'  auto loading='{{loading}}' method='GET'></iron-ajax>
+            <iron-ajax url=/getReminders last-response='{{data}}'  auto loading='{{loading}}' method='GET'></iron-ajax>
             <template is="dom-repeat" items="[[data]]" as="item" >
                 <paper-item >
                 <div role="listbox" on-tap="_clicked" id="listItem">
 
-                        {{_findField(item)}}
+                        {{item.description}}</br>
+                        Show {{item.condition}}</br>
+                        {{item.hour.from}} - {{item.hour.to}}</br>
+
+
 
                 </div>
-                    <paper-icon-button id="button" icon={{icon}} on-tap="_buttonClick"></paper-icon-button>
+                    <paper-icon-button id="button" icon=remove-circle on-tap="_buttonClick"></paper-icon-button>
                     </paper-item>
 
 
 
             </template>
+
         </div>
     </template>
     <script>
@@ -76,41 +83,35 @@
                         type:String,
                         notify: true
 
+                    },
+                    selected:{
+                        notify:true,
+                        type:Object
                     }
 
                 },
 
-                _hideButton:function(){
-                    if(icon=="none"){
-                    var elem = document.getElementById('button');
-                    elem.parentNode.removeChild(elem);
-                    return false;}
-                },
 
 
 
-                _findField: function(item) {
-                    console.log(item);
-                    if(item[this.field1]) {
-                        return item[this.field1];
-                    }
-                    return undefined
-                },
+
 
                 _buttonClick: function(e){
                     var obj = e.model.__data__.item;
-                    var id=obj._id;
-                    var url = "/"+this.buttonurl+"/"+id;
-                    console.log(url);
-                    window.location.href=url;
+                    this.selected=obj;
+
+                    console.log(this.selected);
+//                    var id=obj._id;
+//                    var url = "/"+this.buttonurl+"/"+id;
+//                    console.log(url);
+
 
                 },
 
                 _clicked:function(e){
                     var obj = e.model.__data__.item;
-                    var id = obj._id;
-                    var url="/"+this.tableName+"/"+id;
-                    window.location.href=url;
+                    this.selected=obj;
+                    console.log(this.selected);
                 }
 
 

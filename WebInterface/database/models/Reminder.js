@@ -4,19 +4,19 @@
 var mongoose = require('mongoose');
 
 var reminderSchema =mongoose.Schema({
-    name:String,
+    description:String,
     username:String,
     condition:String,
     hour:{
-        from:{ type: Number,min:0, max: 23 },
-        to:{type: Number, min:0, max:23}
+        from:{ type: Number,min:0, max: 24 },
+        to:{type: Number, min:0, max:24}
     },
-    days:{  mon:Boolean, tue:Boolean,
-            wed:Boolean, thu:Boolean,
-            fri:Boolean, sat:Boolean,
-            sun:Boolean},
+    days:{  Mon:Boolean, Tue:Boolean,
+            Wed:Boolean, Thu:Boolean,
+            Fri:Boolean, Sat:Boolean,
+            Sun:Boolean},},
 
-    timestamps: Date
-});
+{timestamps: { createdAt: 'created_at' } }
+);
 
 module.exports=mongoose.model('Reminder',reminderSchema);
